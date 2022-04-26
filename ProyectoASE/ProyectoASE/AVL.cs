@@ -132,7 +132,20 @@ namespace ProyectoASE
             }
         }
 
-
+        public Nodo<T> Busqueda(T buscar, Nodo<T> nodo, Comparar<T> busqueda)
+        {
+            if (busqueda(buscar, nodo.info) == 1)
+            {
+                return nodo;
+            }
+            else if(busqueda(buscar, nodo.info) == 0)
+            {
+                Busqueda(buscar, nodo.izq, busqueda);
+                Busqueda(buscar, nodo.der, busqueda);
+                return null;
+            }
+            return null;
+        }
         private void InOrderAVL(Nodo<T> root, ref ShowList<T> queueAVL)
         {
             if (root != null)
