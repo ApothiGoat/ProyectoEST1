@@ -4,15 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProyectoASE.Helpers;
+using ProyectoASE.Models;
+
 
 namespace ProyectoASE.Controllers
 {
     public class Pacientes : Controller
     {
         // GET: Pacientes
-        public ActionResult Index()
+        public ActionResult Index(AVL<Pacientes> lista)
         {
-            return View();
+            return View(Data.Instance.Pacientes);
         }
 
         // GET: Pacientes/Details/5
@@ -34,6 +37,15 @@ namespace ProyectoASE.Controllers
         {
             try
             {
+                var informacion = PacientesModel.Save(new PacientesModel
+                {
+                    Name = collection["Name"],
+                    DPI = Convert.ToInt64(collection["DPI"]),
+                    Age = Convert.ToInt32(collection["Age"]),
+                    PhoneN = Convert.ToInt32(collection["PhoneN"]),
+                    LastAppoint = Convert.ToDateTime(collection["LastAppoint"]),
+                    Description = collection["Description"],
+                });
                 return RedirectToAction(nameof(Index));
             }
             catch
