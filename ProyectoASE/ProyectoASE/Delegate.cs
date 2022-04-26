@@ -6,32 +6,27 @@ using System.Threading.Tasks;
 
 namespace ProyectoASE
 {
-    public class Delegate
+    public delegate int Comparar<T>(T a, T b);
+
+    public class Comparar
     {
-
-        public delegate int Comparar<T>(T a, T b);
-
-        public class Comparar
+        public static int CompName(PacientesModel a, PacientesModel b)
         {
-            public static int CompID(PacientesModel a, PacientesModel b)
+            if (a.Name != b.Name)
             {
-                if (a.Name != b.Name)
+                if (a.Name.CompareTo(b.Name) < 0)
                 {
-                    if (a.Name.CompareTo(b.Name) < 0)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        return 1;
-                    }
+                    return -1;
                 }
                 else
                 {
-                    return 0;
+                    return 1;
                 }
             }
-
+            else
+            {
+                return 0;
+            }
         }
     }
 }
