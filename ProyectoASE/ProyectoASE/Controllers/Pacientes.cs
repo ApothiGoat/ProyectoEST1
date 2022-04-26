@@ -13,8 +13,20 @@ namespace ProyectoASE.Controllers
     public class Pacientes : Controller
     {
         // GET: Pacientes
-        public ActionResult Index(AVL<Pacientes> lista)
+        public ActionResult Index(string option, string search)
         {
+            if (option == "Name")
+            {
+
+            }
+            else if (option == "DPI")
+            {
+
+            }
+            else
+            {
+                return View(Data.Instance.Pacientes);
+            }
             return View(Data.Instance.Pacientes);
         }
 
@@ -44,6 +56,7 @@ namespace ProyectoASE.Controllers
                     Age = Convert.ToInt32(collection["Age"]),
                     PhoneN = Convert.ToInt32(collection["PhoneN"]),
                     LastAppoint = Convert.ToDateTime(collection["LastAppoint"]),
+                    NextAppoint = Convert.ToDateTime(collection["NextAppoint"]),
                     Description = collection["Description"],
                 });
                 return RedirectToAction(nameof(Index));

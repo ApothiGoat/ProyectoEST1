@@ -28,5 +28,16 @@ namespace ProyectoASE
                 return 0;
             }
         }
+        public static int SearchName(string a, PacientesModel b)
+        {
+            if (a == b.Name)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

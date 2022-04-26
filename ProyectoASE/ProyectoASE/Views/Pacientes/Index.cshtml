@@ -9,6 +9,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="input-group input-group-lg">
+    @using (Html.BeginForm("Index", "Pacientes", FormMethod.Get))
+    {
+        <b>Opción de busqueda: </b>
+        @Html.RadioButton("option", "Name") <text>Nombre</text>
+        @Html.RadioButton("option", "DPI") <text>DPI</text>
+        @Html.TextBox("Search") <input type="submit" name="submit" value="Search" />
+    }
+</div>
 <table class="table">
     <thead>
         <tr>
