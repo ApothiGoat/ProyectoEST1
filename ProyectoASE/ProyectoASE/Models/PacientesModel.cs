@@ -9,12 +9,13 @@ namespace ProyectoASE.Models
 {
     public class PacientesModel
     {
+        [StringLength(45)]
         public string Name { get; set; }
-
+        [StringLength(13)]
         public long DPI { get; set; }
-
+        [StringLength(3)]
         public int Age { get; set; }
-
+        [StringLength(11)]
         public int PhoneN { get; set; }
 
         [DataType(DataType.Date)]
