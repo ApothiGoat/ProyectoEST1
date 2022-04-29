@@ -12,6 +12,17 @@ namespace ProyectoASE.Helpers
 
         public AVL<PacientesModel> Pacientes = new AVL<PacientesModel>();
 
+        public List<PacientesModel> SearchResult = new List<PacientesModel>
+        {
+            new PacientesModel
+            {
+                Name = "No se encuentra",
+                LastAppoint = null,
+                NextAppoint = null,
+                Description = null,
+            }
+        };
+
         public static Data Instance
         {
             get

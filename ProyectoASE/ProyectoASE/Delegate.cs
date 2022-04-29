@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace ProyectoASE
 {
     public delegate int Comparar<T>(T a, T b);
+    public delegate int CompararN<T>(string a, T b);
+    public delegate int CompararD<T>(int a, T b);
 
     public class Comparar
     {
@@ -31,6 +33,17 @@ namespace ProyectoASE
         public static int SearchName(string a, PacientesModel b)
         {
             if (a == b.Name)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public static int SearchDPI(int a, PacientesModel b)
+        {
+            if (a == b.DPI)
             {
                 return 1;
             }

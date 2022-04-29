@@ -13,20 +13,8 @@ namespace ProyectoASE.Controllers
     public class Pacientes : Controller
     {
         // GET: Pacientes
-        public ActionResult Index(string option, string search)
+        public ActionResult Index()
         {
-            if (option == "Name")
-            {
-
-            }
-            else if (option == "DPI")
-            {
-
-            }
-            else
-            {
-                return View(Data.Instance.Pacientes);
-            }
             return View(Data.Instance.Pacientes);
         }
 
@@ -49,6 +37,7 @@ namespace ProyectoASE.Controllers
         {
             try
             {
+                var nextAppoint = collection["NextAppoint"] != string.Empty? Convert.ToDateTime(collection["NextAppoint"]) : default;
                 var informacion = PacientesModel.Save(new PacientesModel
                 {
                     Name = collection["Name"],
@@ -56,7 +45,7 @@ namespace ProyectoASE.Controllers
                     Age = Convert.ToInt32(collection["Age"]),
                     PhoneN = Convert.ToInt32(collection["PhoneN"]),
                     LastAppoint = Convert.ToDateTime(collection["LastAppoint"]),
-                    NextAppoint = Convert.ToDateTime(collection["NextAppoint"]),
+                    NextAppoint = nextAppoint,
                     Description = collection["Description"],
                 });
                 return RedirectToAction(nameof(Index));
@@ -107,6 +96,62 @@ namespace ProyectoASE.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult Busqueda(string option, string search)
+        {
+            if (option == "Name")
+            {
+                var resultado = PacientesModel.SearchName(search);
+                if(resultado == null)
+                {
+                    Data.Instance.SearchResult.Clear();
+                    Data.Instance.SearchResult = new List<PacientesModel>
+                    {
+                        new PacientesModel
+                        {
+                            Name = "No se encuentra",
+                            LastAppoint = null,
+                            NextAppoint = null,
+                            Description = null,
+                        }
+                    };
+                    View(Data.Instance.SearchResult);
+                }
+                else
+                {
+                    PacientesModel.SearchSave(resultado);
+                    View(Data.Instance.SearchResult);
+                }
+            }
+            else if (option == "DPI")
+            {
+                var resultado = PacientesModel.SearchDPI(Convert.ToInt32(search));
+                if(resultado == null)
+                {
+                    Data.Instance.SearchResult.Clear();
+                    Data.Instance.SearchResult = new List<PacientesModel>
+                    {
+                        new PacientesModel
+                        {
+                            Name = "No se encuentra",
+                            LastAppoint = null,
+                            NextAppoint = null,
+                            Description = null,
+                        }
+                    };
+                    View(Data.Instance.SearchResult);
+                }
+                else
+                {
+                    PacientesModel.SearchSave(resultado);
+                    View(Data.Instance.SearchResult);
+                }
+            }
+            else
+            {
+                return View(Data.Instance.Pacientes);
+            }
+            return View();
         }
     }
 }
