@@ -9,8 +9,9 @@ namespace ProyectoASE
     public class AVL<T> : IEnumerable<T>, IEnumerable
     {
         Nodo<T> raiz;
+        Nodo<T> resultName = null;
+        Nodo<T> resultDPI = null;
         public int altura;
-
         public AVL()
         {
             raiz = null;
@@ -132,19 +133,80 @@ namespace ProyectoASE
             }
         }
 
-        public Nodo<T> Busqueda(T buscar, Nodo<T> nodo, Comparar<T> busqueda)
+        //Busquedas
+        public T BusquedaCN(string buscar, CompararN<T> busqueda)
+        {
+            Nodo<T> search = raiz;
+            return BusquedaN(buscar, search, busqueda);
+        }
+        public T BusquedaCD(int buscar, CompararD<T> busqueda)
+        {
+            Nodo<T> search = raiz;
+            return BusquedaD(buscar, search, busqueda);
+        }
+        public T BusquedaD(int buscar, Nodo<T> nodo, CompararD<T> busqueda)
         {
             if (busqueda(buscar, nodo.info) == 1)
             {
-                return nodo;
+                resultDPI = nodo;
+                return resultDPI.info;
             }
-            else if(busqueda(buscar, nodo.info) == 0)
+            else if (busqueda(buscar, nodo.info) == 0)
             {
-                Busqueda(buscar, nodo.izq, busqueda);
-                Busqueda(buscar, nodo.der, busqueda);
-                return null;
+                resultDPI = null;
+                if (nodo.izq != null)
+                {
+                    BusquedaD(buscar, nodo.izq, busqueda);
+                }
+                if (nodo.der != null)
+                {
+                    BusquedaD(buscar, nodo.der, busqueda);
+                }
+                if (resultName == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultDPI.info;
+                }
             }
-            return null;
+            else
+            {
+                return default;
+            }
+        }
+        public T BusquedaN(string buscar, Nodo<T> nodo, CompararN<T> busqueda)
+        {
+            if (busqueda(buscar, nodo.info) == 1)
+            {
+                resultName = nodo;
+                return resultName.info;
+            }
+            else if (busqueda(buscar, nodo.info) == 0)
+            {
+                resultName = null;
+                if (nodo.izq != null)
+                {
+                    BusquedaN(buscar, nodo.izq, busqueda);
+                }
+                if (nodo.der != null)
+                {
+                    BusquedaN(buscar, nodo.der, busqueda);
+                }
+                if (resultName == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultName.info;
+                }
+            }
+            else
+            {
+                return default;
+            }
         }
         private void InOrderAVL(Nodo<T> root, ref ShowList<T> queueAVL)
         {
@@ -171,7 +233,5 @@ namespace ProyectoASE
         {
             return GetEnumerator();
         }
-
-
     }
 }
