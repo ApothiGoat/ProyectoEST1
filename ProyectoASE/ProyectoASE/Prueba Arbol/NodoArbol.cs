@@ -20,7 +20,6 @@ namespace ProyectoASE.Prueba_Arbol
             this.Value = Value;
             Primero = null;
             Segundo = null;
-
         }
     }
 }
