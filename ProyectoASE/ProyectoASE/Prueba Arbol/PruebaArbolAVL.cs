@@ -175,55 +175,41 @@ namespace ProyectoASE.Prueba_Arbol
             return;
         }
 
-        //public void Ruta(NodoArbol<T> Nodo, Queue<T> Items)
-        //{
-        //    if (Nodo!.Izquierdo != null)
-        //    {
-        //        Ruta(Nodo.Izquierdo, Items);
-        //    }
-        //    Items.Enqueue(Nodo.Value);
-        //    if (Nodo!.Derecho != null)
-        //    {
-        //        Ruta(Nodo.Derecho, Items);
-        //    }
-        //}
-
         //Busquedas
         public T BusquedaCN(string buscar, CompararN<T> busqueda)
         {
             NodoArbol<T> search = Raiz;
-            return BusquedaN(buscar, search, busqueda);
+            return BusquedaN(buscar, search, busqueda, resultName);
         }
         public T BusquedaCD(int buscar, CompararD<T> busqueda)
         {
             NodoArbol<T> search = Raiz;
-            return BusquedaD(buscar, search, busqueda);
+            return BusquedaD(buscar, search, busqueda, resultDPI);
         }
-        public T BusquedaD(int buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
+        public T BusquedaD(int buscar, NodoArbol<T> nodo, CompararD<T> busqueda, NodoArbol<T> resultado)
         {
             if (busqueda(buscar, nodo.Value) == 1)
             {
-                resultDPI = nodo;
-                return resultDPI.Value;
+                resultado = nodo;
+                return resultado.Value;
             }
             else if (busqueda(buscar, nodo.Value) == 0)
             {
-                resultDPI = null;
                 if (nodo.Izquierdo != null)
                 {
-                    BusquedaD(buscar, nodo.Izquierdo, busqueda);
+                    BusquedaD(buscar, nodo.Izquierdo, busqueda, resultado);
                 }
                 if (nodo.Derecho != null)
                 {
-                    BusquedaD(buscar, nodo.Derecho, busqueda);
+                    BusquedaD(buscar, nodo.Derecho, busqueda, resultado);
                 }
-                if (resultName == null)
+                if (resultado == null)
                 {
                     return default;
                 }
                 else
                 {
-                    return resultDPI.Value;
+                    return resultado.Value;
                 }
             }
             else
@@ -231,31 +217,30 @@ namespace ProyectoASE.Prueba_Arbol
                 return default;
             }
         }
-        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda)
+        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda, NodoArbol<T> resultado)
         {
             if (busqueda(buscar, nodo.Value) == 1)
             {
-                resultName = nodo;
-                return resultName.Value;
+                resultado = nodo;
+                return resultado.Value;
             }
             else if (busqueda(buscar, nodo.Value) == 0)
             {
-                resultName = null;
                 if (nodo.Izquierdo != null)
                 {
-                    BusquedaN(buscar, nodo.Izquierdo, busqueda);
+                    BusquedaN(buscar, nodo.Izquierdo, busqueda, resultado);
                 }
                 if (nodo.Derecho != null)
                 {
-                    BusquedaN(buscar, nodo.Derecho, busqueda);
+                    BusquedaN(buscar, nodo.Derecho, busqueda, resultado);
                 }
-                if (resultName == null)
+                if (resultado == null)
                 {
                     return default;
                 }
                 else
                 {
-                    return resultName.Value;
+                    return resultado.Value;
                 }
             }
             else
