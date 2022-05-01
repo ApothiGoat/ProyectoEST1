@@ -55,11 +55,11 @@ namespace ProyectoASE.Prueba_Arbol
                             nodo = Raiz.Primero;
                             if (nodo.Balance == 1)
                             {
-                                //Rotacion simple a la derecha
+                                Raiz = Rotacion_simple_derecha(Raiz, nodo);
                             }
                             else
                             {
-                                //Rotacion doble a la derecha
+                                Raiz = Rotacion_doble_derecha(Raiz, nodo);
                             }
                             Flag = false;
                         }
@@ -99,6 +99,36 @@ namespace ProyectoASE.Prueba_Arbol
                 }
             }
             return Raiz;
+        }
+
+        public NodoArbol<T> Rotacion_simple_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
+        {
+            nodo.Primero = nodo2.Segundo;
+            nodo2.Segundo = nodo;
+            if (nodo2.Balance == 1)
+            {
+                nodo.Balance = 0;
+                nodo2.Balance = 0;
+            }
+            else
+            {
+                nodo.Balance = 1;
+                nodo2.Balance = -1;
+            }
+            return nodo2;
+        }
+
+        public NodoArbol<T> Rotacion_doble_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
+        {
+            NodoArbol<T>? NODO = nodo2.Segundo;
+            nodo.Primero = NODO!.Segundo;
+            NODO.Segundo = nodo;
+            nodo2.Segundo = NODO.Primero;
+            NODO.Primero = nodo2;
+            nodo2.Balance = (NODO.Balance == -1) ? 1 : 0;
+            nodo.Balance = (NODO.Balance == 1) ? -1 : 0;
+            NODO.Balance = 0;
+            return NODO;
         }
     }
 }
