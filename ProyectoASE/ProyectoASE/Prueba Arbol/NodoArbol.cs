@@ -9,17 +9,17 @@ namespace ProyectoASE.Prueba_Arbol
     {
         public T Value { get; set; }
 
-        public NodoArbol<T>? Primero { get; set; }
+        public NodoArbol<T>? Izquierdo { get; set; }
 
-        public NodoArbol<T>? Segundo { get; set; }
+        public NodoArbol<T>? Derecho { get; set; }
 
         public int Balance { get; set; }
 
         public NodoArbol(T Value)
         {
             this.Value = Value;
-            Primero = null;
-            Segundo = null;
+            Izquierdo = null;
+            Derecho = null;
         }
     }
 }

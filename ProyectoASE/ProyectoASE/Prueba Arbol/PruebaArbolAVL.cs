@@ -38,7 +38,7 @@ namespace ProyectoASE.Prueba_Arbol
                 
                 if ((int)Comparador.DynamicInvoke(dato, Raiz.Value) < 0)
                 {
-                    Raiz.Primero = Agregar(Raiz.Primero!, dato, ref Flag, Comparador);
+                    Raiz.Izquierdo = Agregar(Raiz.Izquierdo!, dato, ref Flag, Comparador);
                     if (Flag)
                     {
                         if (Raiz.Balance == -1)
@@ -52,7 +52,7 @@ namespace ProyectoASE.Prueba_Arbol
                         }
                         else if (Raiz.Balance == 1)
                         {
-                            nodo = Raiz.Primero;
+                            nodo = Raiz.Izquierdo;
                             if (nodo.Balance == 1)
                             {
                                 Raiz = Rotacion_simple_derecha(Raiz, nodo);
@@ -69,12 +69,12 @@ namespace ProyectoASE.Prueba_Arbol
                 {
                     if ((int)Comparador.DynamicInvoke(dato, Raiz.Value) > 0)
                     {
-                        Raiz.Segundo = Agregar(Raiz.Segundo!, dato, ref Flag, Comparador);
+                        Raiz.Derecho = Agregar(Raiz.Derecho!, dato, ref Flag, Comparador);
                         if (Flag)
                         {
                             if (Raiz.Balance == -1)
                             {
-                                nodo = Raiz.Segundo;
+                                nodo = Raiz.Derecho;
                                 if (nodo.Balance == -1)
                                 {
                                     Raiz = Rotacion_simple_izquierda(Raiz, nodo);
@@ -103,8 +103,8 @@ namespace ProyectoASE.Prueba_Arbol
 
         public NodoArbol<T> Rotacion_simple_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
-            nodo.Primero = nodo2.Segundo;
-            nodo2.Segundo = nodo;
+            nodo.Izquierdo = nodo2.Derecho;
+            nodo2.Derecho = nodo;
             if (nodo2.Balance == 1)
             {
                 nodo.Balance = 0;
@@ -120,11 +120,11 @@ namespace ProyectoASE.Prueba_Arbol
 
         public NodoArbol<T> Rotacion_doble_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
-            NodoArbol<T> NODO = nodo2.Segundo;
-            nodo.Primero = NODO!.Segundo;
-            NODO.Segundo = nodo;
-            nodo2.Segundo = NODO.Primero;
-            NODO.Primero = nodo2;
+            NodoArbol<T> NODO = nodo2.Derecho;
+            nodo.Izquierdo = NODO!.Derecho;
+            NODO.Derecho = nodo;
+            nodo2.Derecho = NODO.Izquierdo;
+            NODO.Izquierdo = nodo2;
             nodo2.Balance = (NODO.Balance == -1) ? 1 : 0;
             nodo.Balance = (NODO.Balance == 1) ? -1 : 0;
             NODO.Balance = 0;
@@ -133,8 +133,8 @@ namespace ProyectoASE.Prueba_Arbol
 
         public NodoArbol<T> Rotacion_simple_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
-            nodo.Segundo = nodo2.Primero;
-            nodo2.Primero = nodo;
+            nodo.Derecho = nodo2.Izquierdo;
+            nodo2.Izquierdo = nodo;
             if (nodo2.Balance == -1)
             {
                 nodo.Balance = 0;
@@ -150,11 +150,11 @@ namespace ProyectoASE.Prueba_Arbol
 
         public NodoArbol<T> Rotacion_doble_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
-            NodoArbol<T> NODO = nodo2.Primero;
-            nodo.Segundo = NODO!.Primero;
-            NODO.Primero = nodo;
-            nodo2.Primero = NODO.Segundo;
-            NODO.Segundo = nodo2;
+            NodoArbol<T> NODO = nodo2.Izquierdo;
+            nodo.Derecho = NODO!.Izquierdo;
+            NODO.Izquierdo = nodo;
+            nodo2.Izquierdo = NODO.Derecho;
+            NODO.Derecho = nodo2;
             nodo.Balance = (NODO.Balance == -1) ? 1 : 0;
             nodo2.Balance = (NODO.Balance == 1) ? -1 : 0;
             NODO.Balance = 0;
@@ -163,14 +163,14 @@ namespace ProyectoASE.Prueba_Arbol
 
         public void Ruta(NodoArbol<T> Nodo, Queue<T> Items)
         {
-            if (Nodo!.Primero != null)
+            if (Nodo!.Izquierdo != null)
             {
-                Ruta(Nodo.Primero, Items);
+                Ruta(Nodo.Izquierdo, Items);
             }
             Items.Enqueue(Nodo.Value);
-            if (Nodo!.Segundo != null)
+            if (Nodo!.Derecho != null)
             {
-                Ruta(Nodo.Segundo, Items);
+                Ruta(Nodo.Derecho, Items);
             }
         }
         public IEnumerator<T> GetEnumerator()

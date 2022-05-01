@@ -6,15 +6,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProyectoASE.Helpers;
 using ProyectoASE.Models;
-
+using ProyectoASE.Prueba_Arbol;
 
 namespace ProyectoASE.Controllers
 {
     public class Pacientes : Controller
     {
         // GET: Pacientes
+        PruebaArbolAVL<int> Prueba = new PruebaArbolAVL<int>();
+        public static Comparison<int> SortingNumTest = delegate (int m1, int m2) //FOR TEST ONLY
+        {
+            return m1.CompareTo(m2);
+        };
         public ActionResult Index()
         {
+            Prueba.Ingresar(1, SortingNumTest);
+            Prueba.Ingresar(2, SortingNumTest);
+            Prueba.Ingresar(3, SortingNumTest);
+            Prueba.Ingresar(4, SortingNumTest);
+            Prueba.Ingresar(5, SortingNumTest);
+            Prueba.Ingresar(7, SortingNumTest);
+            Prueba.Ingresar(6, SortingNumTest);
             return View(Data.Instance.Pacientes);
         }
 
