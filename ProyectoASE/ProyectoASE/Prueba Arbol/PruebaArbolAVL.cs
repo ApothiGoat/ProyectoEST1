@@ -77,11 +77,11 @@ namespace ProyectoASE.Prueba_Arbol
                                 nodo = Raiz.Segundo;
                                 if (nodo.Balance == -1)
                                 {
-                                    //rotacion simple a l izquierda
+                                    Raiz = Rotacion_simple_izquierda(Raiz, nodo);
                                 }
                                 else
                                 {
-                                    //rotacion doble a la izquierda
+                                    Raiz = Rotacion_doble_izquierda(Raiz, nodo);
                                 }
                                 Flag = false;
                             }
@@ -120,13 +120,43 @@ namespace ProyectoASE.Prueba_Arbol
 
         public NodoArbol<T> Rotacion_doble_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
-            NodoArbol<T>? NODO = nodo2.Segundo;
+            NodoArbol<T> NODO = nodo2.Segundo;
             nodo.Primero = NODO!.Segundo;
             NODO.Segundo = nodo;
             nodo2.Segundo = NODO.Primero;
             NODO.Primero = nodo2;
             nodo2.Balance = (NODO.Balance == -1) ? 1 : 0;
             nodo.Balance = (NODO.Balance == 1) ? -1 : 0;
+            NODO.Balance = 0;
+            return NODO;
+        }
+
+        public NodoArbol<T> Rotacion_simple_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
+        {
+            nodo.Segundo = nodo2.Primero;
+            nodo2.Primero = nodo;
+            if (nodo2.Balance == -1)
+            {
+                nodo.Balance = 0;
+                nodo2.Balance = 0;
+            }
+            else
+            {
+                nodo.Balance = -1;
+                nodo2.Balance = -1;
+            }
+            return nodo2;
+        }
+
+        public NodoArbol<T> Rotacion_doble_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
+        {
+            NodoArbol<T> NODO = nodo2.Primero;
+            nodo.Segundo = NODO!.Primero;
+            NODO.Primero = nodo;
+            nodo2.Primero = NODO.Segundo;
+            NODO.Segundo = nodo2;
+            nodo.Balance = (NODO.Balance == -1) ? 1 : 0;
+            nodo2.Balance = (NODO.Balance == 1) ? -1 : 0;
             NODO.Balance = 0;
             return NODO;
         }
