@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProyectoASE.Models;
+using ProyectoASE.Prueba_Arbol;
 
 namespace ProyectoASE.Helpers
 {
@@ -10,7 +11,7 @@ namespace ProyectoASE.Helpers
     {
         private static Data _instance = null;
 
-        public AVL<PacientesModel> Pacientes = new AVL<PacientesModel>();
+        public PruebaArbolAVL<PacientesModel> Pacientes = new PruebaArbolAVL<PacientesModel>();
 
         public List<PacientesModel> SearchResult = new List<PacientesModel>
         {
