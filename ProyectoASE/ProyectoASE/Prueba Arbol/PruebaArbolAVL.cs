@@ -8,24 +8,24 @@ namespace ProyectoASE.Prueba_Arbol
 {
     public class PruebaArbolAVL<T> : IEnumerable<T>
     {
-        private NodoArbol<T> ? Raiz;
+        private NodoArbol<T>  Raiz;
 
         public PruebaArbolAVL()
         {
             Raiz = null;
         }
-        public virtual bool Vacio
+        public bool Vacio
         {
             get { return this.Raiz == null; }
         }
 
-        public virtual void Ingresar(T dato, Delegate Comparador)
+        public void Ingresar(T dato, Delegate Comparador)
         {
             bool flag = false;
             this.Raiz = Agregar(this.Raiz!, dato, ref flag, Comparador);
         }
 
-        public virtual NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Delegate Comparador)
+        public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Delegate Comparador)
         {
             NodoArbol<T> nodo;
             if (Raiz == null)
@@ -35,7 +35,7 @@ namespace ProyectoASE.Prueba_Arbol
             }
             else
             {
-                //Ingresa si el valor es menor que el valor en el nodo real.
+                
                 if ((int)Comparador.DynamicInvoke(dato, Raiz.Value) < 0)
                 {
                     Raiz.Primero = Agregar(Raiz.Primero!, dato, ref Flag, Comparador);
@@ -159,6 +159,38 @@ namespace ProyectoASE.Prueba_Arbol
             nodo2.Balance = (NODO.Balance == 1) ? -1 : 0;
             NODO.Balance = 0;
             return NODO;
+        }
+
+        public void Ruta(NodoArbol<T> Nodo, Queue<T> Items)
+        {
+            if (Nodo!.Primero != null)
+            {
+                Ruta(Nodo.Primero, Items);
+            }
+            Items.Enqueue(Nodo.Value);
+            if (Nodo!.Segundo != null)
+            {
+                Ruta(Nodo.Segundo, Items);
+            }
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            Queue<T> Elements = new Queue<T>();
+            Ruta(Raiz, Elements);
+            while (Elements.Count != 0)
+            {
+                yield return Elements.Dequeue();
+            }
+        }
+
+        private IEnumerator GetEnumerator1()
+        {
+            return this.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator1();
         }
     }
 }
