@@ -9,6 +9,8 @@ namespace ProyectoASE.Prueba_Arbol
     public class PruebaArbolAVL<T> : IEnumerable<T>
     {
         private NodoArbol<T>  Raiz;
+        private NodoArbol<T> resultDPI = null;
+        private NodoArbol<T> resultName = null;
 
         public PruebaArbolAVL()
         {
@@ -19,13 +21,13 @@ namespace ProyectoASE.Prueba_Arbol
             get { return this.Raiz == null; }
         }
 
-        public void Ingresar(T dato, Delegate Comparador)
+        public void Ingresar(T dato, Comparar<T> Comparador)
         {
             bool flag = false;
             this.Raiz = Agregar(this.Raiz!, dato, ref flag, Comparador);
         }
 
-        public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Delegate Comparador)
+        public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Comparar<T> Comparador)
         {
             NodoArbol<T> nodo;
             if (Raiz == null)
@@ -36,7 +38,7 @@ namespace ProyectoASE.Prueba_Arbol
             else
             {
                 
-                if ((int)Comparador.DynamicInvoke(dato, Raiz.Value) < 0)
+                if (Comparador(dato, Raiz.Value) < 0)
                 {
                     Raiz.Izquierdo = Agregar(Raiz.Izquierdo!, dato, ref Flag, Comparador);
                     if (Flag)
@@ -67,7 +69,7 @@ namespace ProyectoASE.Prueba_Arbol
                 }
                 else
                 {
-                    if ((int)Comparador.DynamicInvoke(dato, Raiz.Value) > 0)
+                    if (Comparador(dato, Raiz.Value) > 0)
                     {
                         Raiz.Derecho = Agregar(Raiz.Derecho!, dato, ref Flag, Comparador);
                         if (Flag)
@@ -161,36 +163,120 @@ namespace ProyectoASE.Prueba_Arbol
             return NODO;
         }
 
-        public void Ruta(NodoArbol<T> Nodo, Queue<T> Items)
+
+        private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
         {
-            if (Nodo!.Izquierdo != null)
+            if (root != null)
             {
-                Ruta(Nodo.Izquierdo, Items);
+                InOrderAVL(root.Izquierdo, ref queueAVL);
+                queueAVL.Add(root.Value);
+                InOrderAVL(root.Derecho, ref queueAVL);
             }
-            Items.Enqueue(Nodo.Value);
-            if (Nodo!.Derecho != null)
+            return;
+        }
+
+        //public void Ruta(NodoArbol<T> Nodo, Queue<T> Items)
+        //{
+        //    if (Nodo!.Izquierdo != null)
+        //    {
+        //        Ruta(Nodo.Izquierdo, Items);
+        //    }
+        //    Items.Enqueue(Nodo.Value);
+        //    if (Nodo!.Derecho != null)
+        //    {
+        //        Ruta(Nodo.Derecho, Items);
+        //    }
+        //}
+
+        //Busquedas
+        public T BusquedaCN(string buscar, CompararN<T> busqueda)
+        {
+            NodoArbol<T> search = Raiz;
+            return BusquedaN(buscar, search, busqueda);
+        }
+        public T BusquedaCD(int buscar, CompararD<T> busqueda)
+        {
+            NodoArbol<T> search = Raiz;
+            return BusquedaD(buscar, search, busqueda);
+        }
+        public T BusquedaD(int buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
+        {
+            if (busqueda(buscar, nodo.Value) == 1)
             {
-                Ruta(Nodo.Derecho, Items);
+                resultDPI = nodo;
+                return resultDPI.Value;
+            }
+            else if (busqueda(buscar, nodo.Value) == 0)
+            {
+                resultDPI = null;
+                if (nodo.Izquierdo != null)
+                {
+                    BusquedaD(buscar, nodo.Izquierdo, busqueda);
+                }
+                if (nodo.Derecho != null)
+                {
+                    BusquedaD(buscar, nodo.Derecho, busqueda);
+                }
+                if (resultName == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultDPI.Value;
+                }
+            }
+            else
+            {
+                return default;
             }
         }
+        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda)
+        {
+            if (busqueda(buscar, nodo.Value) == 1)
+            {
+                resultName = nodo;
+                return resultName.Value;
+            }
+            else if (busqueda(buscar, nodo.Value) == 0)
+            {
+                resultName = null;
+                if (nodo.Izquierdo != null)
+                {
+                    BusquedaN(buscar, nodo.Izquierdo, busqueda);
+                }
+                if (nodo.Derecho != null)
+                {
+                    BusquedaN(buscar, nodo.Derecho, busqueda);
+                }
+                if (resultName == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultName.Value;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
-            Queue<T> Elements = new Queue<T>();
-            Ruta(Raiz, Elements);
-            while (Elements.Count != 0)
+            var queueAVL = new ShowList<T>();
+            InOrderAVL(Raiz, ref queueAVL);
+
+            while (!queueAVL.Empty())
             {
-                yield return Elements.Dequeue();
+                yield return queueAVL.Dequeue();
             }
         }
-
-        private IEnumerator GetEnumerator1()
-        {
-            return this.GetEnumerator();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator1();
+            return GetEnumerator();
         }
     }
 }

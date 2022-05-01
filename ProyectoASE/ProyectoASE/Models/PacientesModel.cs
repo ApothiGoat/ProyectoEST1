@@ -30,7 +30,7 @@ namespace ProyectoASE.Models
 
         public static bool Save(PacientesModel model)
         {
-            Data.Instance.Pacientes.Insertar(model, Comparar.CompName);
+            Data.Instance.Pacientes.Ingresar(model, Comparar.CompName);
             return true;
         }
         public static bool SearchSave(PacientesModel model)

@@ -20,13 +20,13 @@ namespace ProyectoASE.Controllers
         };
         public ActionResult Index()
         {
-            Prueba.Ingresar(1, SortingNumTest);
-            Prueba.Ingresar(2, SortingNumTest);
-            Prueba.Ingresar(3, SortingNumTest);
-            Prueba.Ingresar(4, SortingNumTest);
-            Prueba.Ingresar(5, SortingNumTest);
-            Prueba.Ingresar(7, SortingNumTest);
-            Prueba.Ingresar(6, SortingNumTest);
+            //Prueba.Ingresar(1, SortingNumTest);
+            //Prueba.Ingresar(2, SortingNumTest);
+            //Prueba.Ingresar(3, SortingNumTest);
+            //Prueba.Ingresar(4, SortingNumTest);
+            //Prueba.Ingresar(5, SortingNumTest);
+            //Prueba.Ingresar(7, SortingNumTest);
+            //Prueba.Ingresar(6, SortingNumTest);
             return View(Data.Instance.Pacientes);
         }
 
