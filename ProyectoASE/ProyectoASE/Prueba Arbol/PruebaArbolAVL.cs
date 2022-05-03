@@ -9,6 +9,8 @@ namespace ProyectoASE.Prueba_Arbol
     public class PruebaArbolAVL<T> : IEnumerable<T>
     {
         private NodoArbol<T>  Raiz;
+        private NodoArbol<T> Follow;
+        private ShowList<T> FollowUpSix = null;
         private NodoArbol<T> resultDPI = null;
         private NodoArbol<T> resultName = null;
 
@@ -236,6 +238,33 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Edit
+
+        //Seguimientos
+        public void FollowUpCall()
+        {
+            Follow = Raiz;
+            //FollowUp(Follow);
+        }
+        public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare)
+        {
+            if (compare(nodo.Value) == 1) 
+            {
+                FollowUpSix.Add(nodo.Value);
+                if (nodo.Izquierdo != null)
+                {
+                    FollowUp(nodo.Izquierdo, compare);
+                }
+                else if (nodo.Derecho != null)
+                {
+                    FollowUp(nodo.Derecho, compare);
+                }
+            }
+            if(!FollowUpSix.Empty())
+            {
+                bool NotEmpty = true;
+            }
+        }
+
         private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
         {
             if (root != null)

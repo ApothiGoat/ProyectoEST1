@@ -20,8 +20,8 @@ namespace ProyectoASE.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime LastAppoint { get; set; }    
-        
+        public DateTime LastAppoint { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? NextAppoint { get; set; }
@@ -44,12 +44,16 @@ namespace ProyectoASE.Models
             return true;
         }
         public static PacientesModel SearchName(string nombre)
-        {            
-            return Data.Instance.Pacientes.BusquedaCN(nombre, Comparar.SearchName); ;
+        {
+            return Data.Instance.Pacientes.BusquedaCN(nombre, Comparar.SearchName);
         }
         public static PacientesModel SearchDPI(long dpi)
-        {  
-            return Data.Instance.Pacientes.BusquedaCD(dpi, Comparar.SearchDPI); ;
+        {
+            return Data.Instance.Pacientes.BusquedaCD(dpi, Comparar.SearchDPI);
+        }
+        public static void Six()
+        {
+            Data.Instance.SeguimientoSeis.FollowUpCall();
         }
     }
 }
