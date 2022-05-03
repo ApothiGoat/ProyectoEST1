@@ -37,7 +37,7 @@ namespace ProyectoASE.Controllers
         {
             try
             {
-                var nextAppoint = collection["NextAppoint"] != string.Empty? Convert.ToDateTime(collection["NextAppoint"]) : default;
+                var nextAppoint = collection["NextAppoint"] != string.Empty ? Convert.ToDateTime(collection["NextAppoint"]) : default;
                 var informacion = PacientesModel.Save(new PacientesModel
                 {
                     Name = collection["Name"],
@@ -186,6 +186,11 @@ namespace ProyectoASE.Controllers
             {
                 return View(Data.Instance.Pacientes);
             }
+            return View();
+        }
+        public ActionResult PlusSix()
+        {
+            PacientesModel.Six();
             return View();
         }
     }
