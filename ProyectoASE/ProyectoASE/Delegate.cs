@@ -8,7 +8,7 @@ namespace ProyectoASE
 {
     public delegate int Comparar<T>(T a, T b);
     public delegate int CompararN<T>(string a, T b);
-    public delegate int CompararD<T>(int a, T b);
+    public delegate int CompararD<T>(long a, T b);
 
     public class Comparar
     {
@@ -41,7 +41,7 @@ namespace ProyectoASE
                 return 0;
             }
         }
-        public static int SearchDPI(int a, PacientesModel b)
+        public static int SearchDPI(long a, PacientesModel b)
         {
             if (a == b.DPI)
             {

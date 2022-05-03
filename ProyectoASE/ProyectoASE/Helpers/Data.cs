@@ -11,14 +11,18 @@ namespace ProyectoASE.Helpers
     {
         private static Data _instance = null;
 
-        public PruebaArbolAVL<PacientesModel> Pacientes = new PruebaArbolAVL<PacientesModel>();
+        public PruebaArbolAVL<PacientesModel> Pacientes = new PruebaArbolAVL<PacientesModel>
+        {
+
+        };
+
+        public List<PacientesModel> Edit = new List<PacientesModel>();
 
         public List<PacientesModel> SearchResult = new List<PacientesModel>
         {
             new PacientesModel
             {
                 Name = "No se encuentra",
-                LastAppoint = null,
                 NextAppoint = null,
                 Description = null,
             }

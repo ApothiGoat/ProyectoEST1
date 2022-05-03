@@ -42,7 +42,7 @@ namespace ProyectoASE
         }
         public bool Empty()
         {
-            return Head == null;
+            return Head == null || Head.value == null;
         }
     }
 }
