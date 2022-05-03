@@ -20,13 +20,11 @@ namespace ProyectoASE.Prueba_Arbol
         {
             get { return this.Raiz == null; }
         }
-
         public void Ingresar(T dato, Comparar<T> Comparador)
         {
             bool flag = false;
             this.Raiz = Agregar(this.Raiz!, dato, ref flag, Comparador);
         }
-
         public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Comparar<T> Comparador)
         {
             NodoArbol<T> nodo;
@@ -102,7 +100,6 @@ namespace ProyectoASE.Prueba_Arbol
             }
             return Raiz;
         }
-
         public NodoArbol<T> Rotacion_simple_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             nodo.Izquierdo = nodo2.Derecho;
@@ -119,7 +116,6 @@ namespace ProyectoASE.Prueba_Arbol
             }
             return nodo2;
         }
-
         public NodoArbol<T> Rotacion_doble_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             NodoArbol<T> NODO = nodo2.Derecho;
@@ -132,7 +128,6 @@ namespace ProyectoASE.Prueba_Arbol
             NODO.Balance = 0;
             return NODO;
         }
-
         public NodoArbol<T> Rotacion_simple_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             nodo.Derecho = nodo2.Izquierdo;
@@ -149,7 +144,6 @@ namespace ProyectoASE.Prueba_Arbol
             }
             return nodo2;
         }
-
         public NodoArbol<T> Rotacion_doble_izquierda(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             NodoArbol<T> NODO = nodo2.Izquierdo;
@@ -163,7 +157,85 @@ namespace ProyectoASE.Prueba_Arbol
             return NODO;
         }
 
+        //Busquedas
+        public T BusquedaCN(string buscar, CompararN<T> busqueda)
+        {
+            NodoArbol<T> search = Raiz;
+            return BusquedaN(buscar, search, busqueda);
+        }
+        public T BusquedaCD(long buscar, CompararD<T> busqueda)
+        {
+            NodoArbol<T> search = Raiz;
+            return BusquedaD(buscar, search, busqueda);
+        }
+        public T BusquedaD(long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
+        {
+            resultDPI = nodo;
+            if (busqueda(buscar, nodo.Value) == 1)
+            {
+                resultDPI = nodo;
+                return resultDPI.Value;
+            }
+            else if (busqueda(buscar, nodo.Value) == 0)
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    resultDPI = null;
+                    BusquedaD(buscar, nodo.Izquierdo, busqueda);
+                }
+                else if (nodo.Derecho != null)
+                {
+                    resultDPI = null;
+                    BusquedaD(buscar, nodo.Derecho, busqueda);
+                }
+                if (resultDPI == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultDPI.Value;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
+        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda)
+        {
+            resultName = nodo;
+            if (busqueda(buscar, nodo.Value) == 1)
+            {
+                resultName = nodo;
+                return resultName.Value;
+            }
+            else if (busqueda(buscar, nodo.Value) == 0)
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    BusquedaN(buscar, nodo.Izquierdo, busqueda);
+                }
+                if (nodo.Derecho != null)
+                {
+                    BusquedaN(buscar, nodo.Derecho, busqueda);
+                }
+                if (resultName == null)
+                {
+                    return default;
+                }
+                else
+                {
+                    return resultName.Value;
+                }
+            }
+            else
+            {
+                return default;
+            }
+        }
 
+        //Edit
         private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
         {
             if (root != null)
@@ -173,80 +245,6 @@ namespace ProyectoASE.Prueba_Arbol
                 InOrderAVL(root.Derecho, ref queueAVL);
             }
             return;
-        }
-
-        //Busquedas
-        public T BusquedaCN(string buscar, CompararN<T> busqueda)
-        {
-            NodoArbol<T> search = Raiz;
-            return BusquedaN(buscar, search, busqueda, resultName);
-        }
-        public T BusquedaCD(int buscar, CompararD<T> busqueda)
-        {
-            NodoArbol<T> search = Raiz;
-            return BusquedaD(buscar, search, busqueda, resultDPI);
-        }
-        public T BusquedaD(int buscar, NodoArbol<T> nodo, CompararD<T> busqueda, NodoArbol<T> resultado)
-        {
-            if (busqueda(buscar, nodo.Value) == 1)
-            {
-                resultado = nodo;
-                return resultado.Value;
-            }
-            else if (busqueda(buscar, nodo.Value) == 0)
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    BusquedaD(buscar, nodo.Izquierdo, busqueda, resultado);
-                }
-                if (nodo.Derecho != null)
-                {
-                    BusquedaD(buscar, nodo.Derecho, busqueda, resultado);
-                }
-                if (resultado == null)
-                {
-                    return default;
-                }
-                else
-                {
-                    return resultado.Value;
-                }
-            }
-            else
-            {
-                return default;
-            }
-        }
-        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda, NodoArbol<T> resultado)
-        {
-            if (busqueda(buscar, nodo.Value) == 1)
-            {
-                resultado = nodo;
-                return resultado.Value;
-            }
-            else if (busqueda(buscar, nodo.Value) == 0)
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    BusquedaN(buscar, nodo.Izquierdo, busqueda, resultado);
-                }
-                if (nodo.Derecho != null)
-                {
-                    BusquedaN(buscar, nodo.Derecho, busqueda, resultado);
-                }
-                if (resultado == null)
-                {
-                    return default;
-                }
-                else
-                {
-                    return resultado.Value;
-                }
-            }
-            else
-            {
-                return default;
-            }
         }
 
         public IEnumerator<T> GetEnumerator()

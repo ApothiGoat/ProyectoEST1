@@ -19,11 +19,11 @@ namespace ProyectoASE.Models
         public int PhoneN { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? LastAppoint { get; set; }    
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime LastAppoint { get; set; }    
         
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? NextAppoint { get; set; }
 
         public string Description { get; set; }
@@ -31,6 +31,10 @@ namespace ProyectoASE.Models
         public static bool Save(PacientesModel model)
         {
             Data.Instance.Pacientes.Ingresar(model, Comparar.CompName);
+            return true;
+        }
+        public static bool EditSave(PacientesModel model)
+        {
             return true;
         }
         public static bool SearchSave(PacientesModel model)
@@ -43,7 +47,7 @@ namespace ProyectoASE.Models
         {            
             return Data.Instance.Pacientes.BusquedaCN(nombre, Comparar.SearchName); ;
         }
-        public static PacientesModel SearchDPI(int dpi)
+        public static PacientesModel SearchDPI(long dpi)
         {  
             return Data.Instance.Pacientes.BusquedaCD(dpi, Comparar.SearchDPI); ;
         }
