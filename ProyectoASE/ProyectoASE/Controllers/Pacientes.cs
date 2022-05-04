@@ -184,8 +184,8 @@ namespace ProyectoASE.Controllers
         }
         public ActionResult PlusSix()
         {
-            PacientesModel.Six();
-            return View();
+            var pacientes = PacientesModel.Six();
+            return View(pacientes);
         }
     }
 }

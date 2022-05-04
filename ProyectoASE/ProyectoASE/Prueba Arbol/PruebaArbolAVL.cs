@@ -265,29 +265,31 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Seguimientos
-        public void FollowUpCall()
+        public ShowList<T> FindFollowUpNeeded(CompararTime<T> compare)
         {
-            NodoArbol<T> Follow = Raiz;
-            //FollowUp(Follow, compare);
+            //NodoArbol<T> Follow = Raiz;
+            var list = new ShowList<T>();
+            FollowUp(Raiz, compare, ref list);
+            return list;
         }
-        public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare)
+        public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare, ref ShowList<T> followUpList)
         {
             if (compare(nodo.Value) == 1)
             {
-                FollowUpSix.Add(nodo.Value);
+                followUpList.Add(nodo.Value);
                 if (nodo.Izquierdo != null)
                 {
-                    FollowUp(nodo.Izquierdo, compare);
+                    FollowUp(nodo.Izquierdo, compare, ref followUpList);
                 }
                 else if (nodo.Derecho != null)
                 {
-                    FollowUp(nodo.Derecho, compare);
+                    FollowUp(nodo.Derecho, compare, ref followUpList);
                 }
             }
-            if (!FollowUpSix.Empty())
-            {
-                bool Empty = true;
-            }
+            //if (!FollowUpSix.Empty())
+            //{
+            //    bool Empty = true;
+            //}
         }
 
         private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
