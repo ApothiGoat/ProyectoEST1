@@ -33,8 +33,9 @@ namespace ProyectoASE.Models
             Data.Instance.Pacientes.Ingresar(model, Comparar.CompName);
             return true;
         }
-        public static bool EditSave(PacientesModel model)
+        public static bool EditSave(PacientesModel model, long dpi)
         {
+            Data.Instance.Pacientes.EditarCall(model, dpi, Comparar.SearchDPI);
             return true;
         }
         public static bool SearchSave(PacientesModel model)
@@ -51,9 +52,10 @@ namespace ProyectoASE.Models
         {
             return Data.Instance.Pacientes.BusquedaCD(dpi, Comparar.SearchDPI);
         }
-        public static void Six()
+        public static bool Six()
         {
             Data.Instance.SeguimientoSeis.FollowUpCall();
+            return true;
         }
     }
 }
