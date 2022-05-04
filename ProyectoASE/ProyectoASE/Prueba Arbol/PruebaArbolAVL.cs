@@ -9,7 +9,7 @@ namespace ProyectoASE.Prueba_Arbol
     public class PruebaArbolAVL<T> : IEnumerable<T>
     {
         private NodoArbol<T>  Raiz;
-        private NodoArbol<T> Follow;
+        private NodoArbol<T> Raiz1;
         private ShowList<T> FollowUpSix = null;
         private NodoArbol<T> resultDPI = null;
         private NodoArbol<T> resultName = null;
@@ -238,16 +238,41 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Edit
+        public void EditarCall(T nuevo, long dpi, CompararD<T> busqueda)
+        {
+            NodoArbol<T> edit = Raiz;
+            Editar(nuevo, dpi, edit, busqueda);
+        }
+        public void Editar(T nuevo, long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
+        {
+            if (busqueda(buscar, nodo.Value) == 1)
+            {
+                nodo.Value = nuevo;
+            }
+            else if (busqueda(buscar, nodo.Value) == 0)
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    resultDPI = null;
+                    Editar(nuevo, buscar, nodo.Izquierdo, busqueda);
+                }
+                else if (nodo.Derecho != null)
+                {
+                    resultDPI = null;
+                    Editar(nuevo, buscar, nodo.Derecho, busqueda);
+                }
+            }
+        }
 
         //Seguimientos
         public void FollowUpCall()
         {
-            Follow = Raiz;
-            //FollowUp(Follow);
+            NodoArbol<T> Follow = Raiz;
+            //FollowUp(Follow, compare);
         }
         public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare)
         {
-            if (compare(nodo.Value) == 1) 
+            if (compare(nodo.Value) == 1)
             {
                 FollowUpSix.Add(nodo.Value);
                 if (nodo.Izquierdo != null)
@@ -259,9 +284,9 @@ namespace ProyectoASE.Prueba_Arbol
                     FollowUp(nodo.Derecho, compare);
                 }
             }
-            if(!FollowUpSix.Empty())
+            if (!FollowUpSix.Empty())
             {
-                bool NotEmpty = true;
+                bool Empty = true;
             }
         }
 
@@ -286,6 +311,7 @@ namespace ProyectoASE.Prueba_Arbol
                 yield return queueAVL.Dequeue();
             }
         }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
