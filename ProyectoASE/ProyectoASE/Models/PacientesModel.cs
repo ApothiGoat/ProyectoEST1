@@ -52,10 +52,9 @@ namespace ProyectoASE.Models
         {
             return Data.Instance.Pacientes.BusquedaCD(dpi, Comparar.SearchDPI);
         }
-        public static bool Six()
+        public static ShowList<PacientesModel> Six()
         {
-            Data.Instance.SeguimientoSeis.FollowUpCall();
-            return true;
+            return Data.Instance.Pacientes.FindFollowUpNeeded(Comparar.SixMonths);
         }
     }
 }
