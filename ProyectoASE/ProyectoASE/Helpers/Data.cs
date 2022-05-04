@@ -11,7 +11,7 @@ namespace ProyectoASE.Helpers
     {
         private static Data _instance = null;
 
-        public PruebaArbolAVL<PacientesModel> Pacientes = new PruebaArbolAVL<PacientesModel>();
+        public ArbolAVL<PacientesModel> Pacientes = new ArbolAVL<PacientesModel>();
 
         public List<PacientesModel> Edit = new List<PacientesModel>();
 
@@ -25,7 +25,7 @@ namespace ProyectoASE.Helpers
             }
         };
 
-        public PruebaArbolAVL<PacientesModel> SeguimientoSeis = new PruebaArbolAVL<PacientesModel>();
+        public ArbolAVL<PacientesModel> SeguimientoSeis = new ArbolAVL<PacientesModel>();
 
         public static Data Instance
         {

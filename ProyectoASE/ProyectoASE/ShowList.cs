@@ -11,6 +11,8 @@ namespace ProyectoASE
         NodeList<T> Cola = new NodeList<T>();
         NodeList<T> Return = new NodeList<T>();
 
+        NodeList<T> SixMonths = new NodeList<T>();
+
         public void Add(T Value)
         {
             NodeList<T> Nuevo = new NodeList<T>();
