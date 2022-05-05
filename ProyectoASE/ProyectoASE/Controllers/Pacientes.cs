@@ -194,5 +194,45 @@ namespace ProyectoASE.Controllers
                 return View();
             }
         }
+
+        public ActionResult Ortodoncia()
+        {
+            try
+            {
+                var pacientes = PacientesModel.SearchOrtodoncia();
+                return View(pacientes);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Caries()
+        {
+            try
+            {
+                var pacientes = PacientesModel.SearchCaries();
+                return View(pacientes);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Specific()
+        {
+            try
+            {
+                var pacientes = PacientesModel.Searchspecific();
+                return View(pacientes);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
     }
 }

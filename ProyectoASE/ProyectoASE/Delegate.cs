@@ -11,6 +11,7 @@ namespace ProyectoASE
     public delegate int CompararN<T>(string a, T b);
     public delegate int CompararD<T>(long a, T b);
     public delegate int CompararTime<T>(T last);
+    public delegate int CompararDescription<T>(T Des);
 
     public class Comparar
     {
@@ -58,7 +59,7 @@ namespace ProyectoASE
         {
             DateTime? today = DateTime.Today;
             TimeSpan? diff = today - last.LastAppoint;
-            if(diff.Value.TotalDays > 180)
+            if (diff.Value.TotalDays > 183 && last.Description == "")
             {
                 return 1;
             }
@@ -67,5 +68,76 @@ namespace ProyectoASE
                 return 0;
             }
         }
+
+        public static int SearchOrto(PacientesModel Des)
+        {
+
+            DateTime? today = DateTime.Today;
+            TimeSpan? diff = today - Des.LastAppoint;
+
+            if (Des.Description.Contains("Ortodoncia") || Des.Description.Contains("ortodoncia"))
+            {
+                if (diff.Value.TotalDays > 61)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static int SearchCarie(PacientesModel Des)
+        {
+
+            DateTime? today = DateTime.Today;
+            TimeSpan? diff = today - Des.LastAppoint;
+
+            if (Des.Description.Contains("Caries") || Des.Description.Contains("caries"))
+            {
+                if (diff.Value.TotalDays > 122)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public static int SearchSpecific(PacientesModel Des)
+        {
+
+            DateTime? today = DateTime.Today;
+            TimeSpan? diff = today - Des.LastAppoint;
+
+            if (Des.Description.Contains("Caries") || Des.Description.Contains("caries") || Des.Description.Contains("Ortodoncia") || Des.Description.Contains("ortodoncia") && Des.Description != "")
+            {
+                return 0;
+            }
+            else
+            {
+                if (diff.Value.TotalDays > 183)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+
     }
 }

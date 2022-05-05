@@ -25,8 +25,7 @@ namespace ProyectoASE.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? NextAppoint { get; set; }
-
-        [Required]
+     
         public string Description { get; set; }
 
         public static bool Save(PacientesModel model)
@@ -56,6 +55,22 @@ namespace ProyectoASE.Models
         public static List<PacientesModel> Six()
         {
             return Data.Instance.Pacientes.FindFollowUpNeeded(Comparar.SixMonths);
+        }
+
+        public static List<PacientesModel> SearchOrtodoncia()
+        {
+
+           return Data.Instance.Pacientes.FindOrtodoncia(Comparar.SearchOrto);
+        }
+
+        public static List<PacientesModel> SearchCaries()
+        {
+            return Data.Instance.Pacientes.FindCaries(Comparar.SearchCarie);
+        }
+
+        public static List<PacientesModel> Searchspecific()
+        {
+            return Data.Instance.Pacientes.FindSpecific(Comparar.SearchSpecific);
         }
     }
 }
