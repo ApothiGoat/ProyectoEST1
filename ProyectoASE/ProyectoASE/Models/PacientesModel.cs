@@ -44,7 +44,7 @@ namespace ProyectoASE.Models
             Data.Instance.SearchResult.Add(model);
             return true;
         }
-        public static PacientesModel SearchName(string nombre)
+        public static List<PacientesModel> SearchName(string nombre)
         {
             return Data.Instance.Pacientes.BusquedaCN(nombre, Comparar.SearchName);
         }
