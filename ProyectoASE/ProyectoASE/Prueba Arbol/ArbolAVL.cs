@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProyectoASE.Prueba_Arbol
 {
-    public class PruebaArbolAVL<T> : IEnumerable<T>
+    public class ArbolAVL<T> : IEnumerable<T>
     {
         private NodoArbol<T>  Raiz;
-        private NodoArbol<T> Raiz1;
-        private ShowList<T> FollowUpSix = null;
         private NodoArbol<T> resultDPI = null;
         private NodoArbol<T> resultName = null;
 
-        public PruebaArbolAVL()
+        public ArbolAVL()
         {
             Raiz = null;
         }
@@ -162,17 +160,16 @@ namespace ProyectoASE.Prueba_Arbol
         //Busquedas
         public T BusquedaCN(string buscar, CompararN<T> busqueda)
         {
-            NodoArbol<T> search = Raiz;
-            return BusquedaN(buscar, search, busqueda);
+            resultName = null;
+            return BusquedaN(buscar, Raiz, busqueda);
         }
         public T BusquedaCD(long buscar, CompararD<T> busqueda)
         {
-            NodoArbol<T> search = Raiz;
-            return BusquedaD(buscar, search, busqueda);
+            resultDPI = null;
+            return BusquedaD(buscar, Raiz, busqueda);
         }
         public T BusquedaD(long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
         {
-            resultDPI = nodo;
             if (busqueda(buscar, nodo.Value) == 1)
             {
                 resultDPI = nodo;
@@ -206,7 +203,6 @@ namespace ProyectoASE.Prueba_Arbol
         }
         public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda)
         {
-            resultName = nodo;
             if (busqueda(buscar, nodo.Value) == 1)
             {
                 resultName = nodo;
@@ -240,8 +236,7 @@ namespace ProyectoASE.Prueba_Arbol
         //Edit
         public void EditarCall(T nuevo, long dpi, CompararD<T> busqueda)
         {
-            NodoArbol<T> edit = Raiz;
-            Editar(nuevo, dpi, edit, busqueda);
+            Editar(nuevo, dpi, Raiz, busqueda);
         }
         public void Editar(T nuevo, long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
         {
@@ -265,14 +260,13 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Seguimientos
-        public ShowList<T> FindFollowUpNeeded(CompararTime<T> compare)
+        public List<T> FindFollowUpNeeded(CompararTime<T> compare)
         {
-            //NodoArbol<T> Follow = Raiz;
-            var list = new ShowList<T>();
-            FollowUp(Raiz, compare, ref list);
-            return list;
+            List<T> lista = new List<T>();
+            FollowUp(Raiz, compare, ref lista);
+            return lista;
         }
-        public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare, ref ShowList<T> followUpList)
+        public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare, ref List<T> followUpList)
         {
             if (compare(nodo.Value) == 1)
             {
@@ -281,15 +275,22 @@ namespace ProyectoASE.Prueba_Arbol
                 {
                     FollowUp(nodo.Izquierdo, compare, ref followUpList);
                 }
-                else if (nodo.Derecho != null)
+                if (nodo.Derecho != null)
                 {
                     FollowUp(nodo.Derecho, compare, ref followUpList);
                 }
             }
-            //if (!FollowUpSix.Empty())
-            //{
-            //    bool Empty = true;
-            //}
+            else
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    FollowUp(nodo.Izquierdo, compare, ref followUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    FollowUp(nodo.Derecho, compare, ref followUpList);
+                }
+            }
         }
 
         private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
