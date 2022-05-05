@@ -1,19 +1,13 @@
 ﻿@model IEnumerable<ProyectoASE.Models.PacientesModel>
 
 @{
-    ViewData["Title"] = "Sonrisa 10/10";
+    ViewData["Title"] = "Caries";
 }
 
-<h1>Index</h1>
+<h1>Caries</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
-</p>
-<p>
-    @Html.ActionLink("Busqueda", "Busqueda", new { })
-</p>
-<p>
-    @Html.ActionLink("Seguimiento", "PlusSix", new { }) |  @Html.ActionLink("Ortodoncia", "Ortodoncia", new { }) | @Html.ActionLink("Caries", "Caries", new { }) | @Html.ActionLink("Especifico", "Specific", new { })
+    @Html.ActionLink("Regresar a listado", "Index", new { })
 </p>
 <table class="table">
     <thead>
@@ -62,24 +56,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NextAppoint)
-                @*@Html.DisplayFor(modelItem =>
-                {
-               if (item.NextAppoint != default)
-               {
-                   return item.NextAppoint;
-               }
-               else
-               {
-                   return "va";
-               }
-               })*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Details", new { Id = item.DPI })
-            </td>
+            </td>          
         </tr>
 }
     </tbody>

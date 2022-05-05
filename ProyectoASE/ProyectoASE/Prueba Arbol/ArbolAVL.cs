@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using ProyectoASE.Models;
 
 namespace ProyectoASE.Prueba_Arbol
 {
@@ -100,6 +101,9 @@ namespace ProyectoASE.Prueba_Arbol
             }
             return Raiz;
         }
+
+
+
         public NodoArbol<T> Rotacion_simple_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             nodo.Izquierdo = nodo2.Derecho;
@@ -292,6 +296,115 @@ namespace ProyectoASE.Prueba_Arbol
                 }
             }
         }
+
+        //Two Months && Ortodoncia
+
+        public List<T> FindOrtodoncia(CompararDescription<T> compare)
+        {
+            List<T> lista = new List<T>();
+            OrtodonciaFollowUp(Raiz, compare, ref lista);
+            return lista;
+        }
+
+        public void OrtodonciaFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> OrtodonciafollowUpList)
+        {
+            if (compare(nodo.Value) == 1)
+            {
+                OrtodonciafollowUpList.Add(nodo.Value);
+                if (nodo.Izquierdo != null)
+                {
+                    OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
+                }
+            }
+            else
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
+                }
+            }
+        }
+
+        //Search Caries && 4 months
+
+        public List<T> FindCaries(CompararDescription<T> compare)
+        {
+            List<T> lista = new List<T>();
+            CariesFollowUp(Raiz, compare, ref lista);
+            return lista;
+        }
+
+        public void CariesFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> CariesfollowUpList)
+        {
+            if (compare(nodo.Value) == 1)
+            {
+                CariesfollowUpList.Add(nodo.Value);
+                if (nodo.Izquierdo != null)
+                {
+                    CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
+                }
+            }
+            else
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
+                }
+            }
+        }
+
+        //Search Specific && 6 months
+
+        public List<T> FindSpecific(CompararDescription<T> compare)
+        {
+            List<T> lista = new List<T>();
+            SpecificFollowUp(Raiz, compare, ref lista);
+            return lista;
+        }
+
+        public void SpecificFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> SpecificfollowUpList)
+        {
+            if (compare(nodo.Value) == 1)
+            {
+                SpecificfollowUpList.Add(nodo.Value);
+                if (nodo.Izquierdo != null)
+                {
+                    SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
+                }
+            }
+            else
+            {
+                if (nodo.Izquierdo != null)
+                {
+                    SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
+                }
+                if (nodo.Derecho != null)
+                {
+                    SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
+                }
+            }
+        }
+
 
         private void InOrderAVL(NodoArbol<T> root, ref ShowList<T> queueAVL)
         {
