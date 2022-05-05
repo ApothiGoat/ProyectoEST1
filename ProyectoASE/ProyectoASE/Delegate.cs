@@ -59,6 +59,7 @@ namespace ProyectoASE
         {
             DateTime? today = DateTime.Today;
             TimeSpan? diff = today - last.LastAppoint;
+
             if (diff.Value.TotalDays > 183 && last.Description == "")
             {
                 return 1;
@@ -71,7 +72,6 @@ namespace ProyectoASE
 
         public static int SearchOrto(PacientesModel Des)
         {
-
             DateTime? today = DateTime.Today;
             TimeSpan? diff = today - Des.LastAppoint;
 
@@ -94,7 +94,6 @@ namespace ProyectoASE
 
         public static int SearchCarie(PacientesModel Des)
         {
-
             DateTime? today = DateTime.Today;
             TimeSpan? diff = today - Des.LastAppoint;
 
@@ -121,7 +120,7 @@ namespace ProyectoASE
             DateTime? today = DateTime.Today;
             TimeSpan? diff = today - Des.LastAppoint;
 
-            if (Des.Description.Contains("Caries") || Des.Description.Contains("caries") || Des.Description.Contains("Ortodoncia") || Des.Description.Contains("ortodoncia") && Des.Description != "")
+            if (Des.Description.Contains("Caries") || Des.Description.Contains("caries") || Des.Description.Contains("Ortodoncia") || Des.Description.Contains("ortodoncia") || Des.Description == "")
             {
                 return 0;
             }
@@ -137,7 +136,5 @@ namespace ProyectoASE
                 }
             }
         }
-
-
     }
 }

@@ -118,10 +118,9 @@ namespace ProyectoASE.Controllers
             {
                 try
                 {
-                    var resultado = PacientesModel.SearchName(search);
-                    if (resultado == null)
+                    var Nombres = PacientesModel.SearchName(search);
+                    if(Nombres.Count == 0)
                     {
-                        Data.Instance.SearchResult.Clear();
                         Data.Instance.SearchResult = new List<PacientesModel>
                         {
                             new PacientesModel
@@ -135,14 +134,13 @@ namespace ProyectoASE.Controllers
                     }
                     else
                     {
-                        PacientesModel.SearchSave(resultado);
-                        View(Data.Instance.SearchResult);
+                        return View(Nombres);
                     }
                 }
                 catch (Exception)
                 {
 
-                    return View(Data.Instance.Pacientes);
+                    return View(RedirectToAction(nameof(Index)));
                 }
             }
             else if (option == "DPI")
@@ -154,14 +152,14 @@ namespace ProyectoASE.Controllers
                     {
                         Data.Instance.SearchResult.Clear();
                         Data.Instance.SearchResult = new List<PacientesModel>
-                    {
-                        new PacientesModel
                         {
-                            Name = "No se encuentra",
-                            NextAppoint = null,
-                            Description = null,
-                        }
-                    };
+                            new PacientesModel
+                            {
+                                Name = "No se encuentra",
+                                NextAppoint = null,
+                                Description = null,
+                            }
+                        };
                         View(Data.Instance.SearchResult);
                     }
                     else
@@ -191,7 +189,7 @@ namespace ProyectoASE.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -204,7 +202,7 @@ namespace ProyectoASE.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -217,7 +215,7 @@ namespace ProyectoASE.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -230,7 +228,7 @@ namespace ProyectoASE.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

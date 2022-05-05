@@ -101,9 +101,6 @@ namespace ProyectoASE.Prueba_Arbol
             }
             return Raiz;
         }
-
-
-
         public NodoArbol<T> Rotacion_simple_derecha(NodoArbol<T> nodo, NodoArbol<T> nodo2)
         {
             nodo.Izquierdo = nodo2.Derecho;
@@ -162,10 +159,12 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Busquedas
-        public T BusquedaCN(string buscar, CompararN<T> busqueda)
+        public List<T> BusquedaCN(string buscar, CompararN<T> busqueda)
         {
             resultName = null;
-            return BusquedaN(buscar, Raiz, busqueda);
+            List<T> nombres = new List<T>();
+            BusquedaN(buscar, Raiz, busqueda, ref nombres);
+            return nombres;
         }
         public T BusquedaCD(long buscar, CompararD<T> busqueda)
         {
@@ -174,30 +173,37 @@ namespace ProyectoASE.Prueba_Arbol
         }
         public T BusquedaD(long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
         {
-            if (busqueda(buscar, nodo.Value) == 1)
+            if(nodo != null)
             {
-                resultDPI = nodo;
-                return resultDPI.Value;
-            }
-            else if (busqueda(buscar, nodo.Value) == 0)
-            {
-                if (nodo.Izquierdo != null)
+                if (busqueda(buscar, nodo.Value) == 1)
                 {
-                    resultDPI = null;
-                    BusquedaD(buscar, nodo.Izquierdo, busqueda);
+                    resultDPI = nodo;
+                    return resultDPI.Value;
                 }
-                else if (nodo.Derecho != null)
+                else if (busqueda(buscar, nodo.Value) == 0)
                 {
-                    resultDPI = null;
-                    BusquedaD(buscar, nodo.Derecho, busqueda);
-                }
-                if (resultDPI == null)
-                {
-                    return default;
+                    if (nodo.Izquierdo != null)
+                    {
+                        resultDPI = null;
+                        BusquedaD(buscar, nodo.Izquierdo, busqueda);
+                    }
+                    else if (nodo.Derecho != null)
+                    {
+                        resultDPI = null;
+                        BusquedaD(buscar, nodo.Derecho, busqueda);
+                    }
+                    if (resultDPI == null)
+                    {
+                        return default;
+                    }
+                    else
+                    {
+                        return resultDPI.Value;
+                    }
                 }
                 else
                 {
-                    return resultDPI.Value;
+                    return default;
                 }
             }
             else
@@ -205,35 +211,33 @@ namespace ProyectoASE.Prueba_Arbol
                 return default;
             }
         }
-        public T BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda)
+        public void BusquedaN(string buscar, NodoArbol<T> nodo, CompararN<T> busqueda, ref List<T> Nombres)
         {
-            if (busqueda(buscar, nodo.Value) == 1)
+            if(nodo != null)
             {
-                resultName = nodo;
-                return resultName.Value;
-            }
-            else if (busqueda(buscar, nodo.Value) == 0)
-            {
-                if (nodo.Izquierdo != null)
+                if(busqueda(buscar, nodo.Value) == 1)
                 {
-                    BusquedaN(buscar, nodo.Izquierdo, busqueda);
-                }
-                if (nodo.Derecho != null)
-                {
-                    BusquedaN(buscar, nodo.Derecho, busqueda);
-                }
-                if (resultName == null)
-                {
-                    return default;
+                    Nombres.Add(nodo.Value);
+                    if(nodo.Izquierdo != null)
+                    {
+                        BusquedaN(buscar, nodo.Izquierdo, busqueda, ref Nombres);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        BusquedaN(buscar, nodo.Derecho, busqueda, ref Nombres);
+                    }
                 }
                 else
                 {
-                    return resultName.Value;
+                    if (nodo.Izquierdo != null)
+                    {
+                        BusquedaN(buscar, nodo.Izquierdo, busqueda, ref Nombres);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        BusquedaN(buscar, nodo.Derecho, busqueda, ref Nombres);
+                    }
                 }
-            }
-            else
-            {
-                return default;
             }
         }
 
@@ -272,135 +276,141 @@ namespace ProyectoASE.Prueba_Arbol
         }
         public void FollowUp(NodoArbol<T> nodo, CompararTime<T> compare, ref List<T> followUpList)
         {
-            if (compare(nodo.Value) == 1)
+            if(nodo != null)
             {
-                followUpList.Add(nodo.Value);
-                if (nodo.Izquierdo != null)
+                if (compare(nodo.Value) == 1)
                 {
-                    FollowUp(nodo.Izquierdo, compare, ref followUpList);
+                    followUpList.Add(nodo.Value);
+                    if (nodo.Izquierdo != null)
+                    {
+                        FollowUp(nodo.Izquierdo, compare, ref followUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        FollowUp(nodo.Derecho, compare, ref followUpList);
+                    }
                 }
-                if (nodo.Derecho != null)
+                else
                 {
-                    FollowUp(nodo.Derecho, compare, ref followUpList);
-                }
-            }
-            else
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    FollowUp(nodo.Izquierdo, compare, ref followUpList);
-                }
-                if (nodo.Derecho != null)
-                {
-                    FollowUp(nodo.Derecho, compare, ref followUpList);
+                    if (nodo.Izquierdo != null)
+                    {
+                        FollowUp(nodo.Izquierdo, compare, ref followUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        FollowUp(nodo.Derecho, compare, ref followUpList);
+                    }
                 }
             }
         }
 
         //Two Months && Ortodoncia
-
         public List<T> FindOrtodoncia(CompararDescription<T> compare)
         {
             List<T> lista = new List<T>();
             OrtodonciaFollowUp(Raiz, compare, ref lista);
             return lista;
         }
-
         public void OrtodonciaFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> OrtodonciafollowUpList)
         {
-            if (compare(nodo.Value) == 1)
+            if(nodo != null)
             {
-                OrtodonciafollowUpList.Add(nodo.Value);
-                if (nodo.Izquierdo != null)
+                if (compare(nodo.Value) == 1)
                 {
-                    OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
+                    OrtodonciafollowUpList.Add(nodo.Value);
+                    if (nodo.Izquierdo != null)
+                    {
+                        OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
+                    }
                 }
-                if (nodo.Derecho != null)
+                else
                 {
-                    OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
-                }
-            }
-            else
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
-                }
-                if (nodo.Derecho != null)
-                {
-                    OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
+                    if (nodo.Izquierdo != null)
+                    {
+                        OrtodonciaFollowUp(nodo.Izquierdo, compare, ref OrtodonciafollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        OrtodonciaFollowUp(nodo.Derecho, compare, ref OrtodonciafollowUpList);
+                    }
                 }
             }
         }
 
         //Search Caries && 4 months
-
         public List<T> FindCaries(CompararDescription<T> compare)
         {
             List<T> lista = new List<T>();
             CariesFollowUp(Raiz, compare, ref lista);
             return lista;
         }
-
         public void CariesFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> CariesfollowUpList)
         {
-            if (compare(nodo.Value) == 1)
+            if(nodo != null)
             {
-                CariesfollowUpList.Add(nodo.Value);
-                if (nodo.Izquierdo != null)
+                if (compare(nodo.Value) == 1)
                 {
-                    CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
+                    CariesfollowUpList.Add(nodo.Value);
+                    if (nodo.Izquierdo != null)
+                    {
+                        CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
+                    }
                 }
-                if (nodo.Derecho != null)
+                else
                 {
-                    CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
-                }
-            }
-            else
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
-                }
-                if (nodo.Derecho != null)
-                {
-                    CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
+                    if (nodo.Izquierdo != null)
+                    {
+                        CariesFollowUp(nodo.Izquierdo, compare, ref CariesfollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        CariesFollowUp(nodo.Derecho, compare, ref CariesfollowUpList);
+                    }
                 }
             }
         }
 
         //Search Specific && 6 months
-
         public List<T> FindSpecific(CompararDescription<T> compare)
         {
             List<T> lista = new List<T>();
             SpecificFollowUp(Raiz, compare, ref lista);
             return lista;
         }
-
         public void SpecificFollowUp(NodoArbol<T> nodo, CompararDescription<T> compare, ref List<T> SpecificfollowUpList)
         {
-            if (compare(nodo.Value) == 1)
+            if(nodo != null)
             {
-                SpecificfollowUpList.Add(nodo.Value);
-                if (nodo.Izquierdo != null)
+                if (compare(nodo.Value) == 1)
                 {
-                    SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
+                    SpecificfollowUpList.Add(nodo.Value);
+                    if (nodo.Izquierdo != null)
+                    {
+                        SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
+                    }
                 }
-                if (nodo.Derecho != null)
+                else
                 {
-                    SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
-                }
-            }
-            else
-            {
-                if (nodo.Izquierdo != null)
-                {
-                    SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
-                }
-                if (nodo.Derecho != null)
-                {
-                    SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
+                    if (nodo.Izquierdo != null)
+                    {
+                        SpecificFollowUp(nodo.Izquierdo, compare, ref SpecificfollowUpList);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        SpecificFollowUp(nodo.Derecho, compare, ref SpecificfollowUpList);
+                    }
                 }
             }
         }
