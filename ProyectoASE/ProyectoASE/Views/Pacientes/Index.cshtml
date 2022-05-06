@@ -43,44 +43,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DPI)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastAppoint)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NextAppoint)
-                @*@Html.DisplayFor(modelItem =>
-                {
-               if (item.NextAppoint != default)
-               {
-                   return item.NextAppoint;
-               }
-               else
-               {
-                   return "va";
-               }
-               })*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Details", new { Id = item.DPI })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DPI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastAppoint)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextAppoint)
+                    @*@Html.DisplayFor(modelItem =>
+                     {
+                    if (item.NextAppoint != default)
+                    {
+                        return item.NextAppoint;
+                    }
+                    else
+                    {
+                        return "va";
+                    }
+                    })*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Details", new { Id = item.DPI })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

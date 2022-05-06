@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ProyectoASE
 {
     public delegate int Comparar<T>(T a, T b);
+    public delegate int CheckDay<T>(T a, T b);
     public delegate int CompararN<T>(string a, T b);
     public delegate int CompararD<T>(long a, T b);
     public delegate int CompararTime<T>(T last);
@@ -33,6 +34,19 @@ namespace ProyectoASE
                 return 0;
             }
         }
+
+        public static int CheckDay(PacientesModel a, PacientesModel b)
+        {
+            if(a.NextAppoint == b.NextAppoint)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public static int SearchName(string a, PacientesModel b)
         {
             if (a == b.Name)
