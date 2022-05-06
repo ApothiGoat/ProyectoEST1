@@ -32,7 +32,7 @@ namespace ProyectoASE.Models
         [Display(Name = "Proxima Consulta")]
         public DateTime? NextAppoint { get; set; }
 
-        [Display(Name = "Descripcion"), Required]
+        [Display(Name = "Descripcion")]
         public string Description { get; set; }
 
         public static bool Save(PacientesModel model)
