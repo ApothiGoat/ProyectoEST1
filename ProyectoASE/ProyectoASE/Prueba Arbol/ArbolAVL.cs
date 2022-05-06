@@ -11,7 +11,7 @@ namespace ProyectoASE.Prueba_Arbol
     {
         private NodoArbol<T>  Raiz;
         private NodoArbol<T> resultDPI = null;
-        private NodoArbol<T> resultName = null;
+        private int citas = 0;
 
         public ArbolAVL()
         {
@@ -21,12 +21,21 @@ namespace ProyectoASE.Prueba_Arbol
         {
             get { return this.Raiz == null; }
         }
-        public void Ingresar(T dato, Comparar<T> Comparador)
+        public bool Ingresar(T dato, Comparar<T> Comparador, CheckDay<T> Check)
         {
             bool flag = false;
-            this.Raiz = Agregar(this.Raiz!, dato, ref flag, Comparador);
+            bool succes = false;
+            this.Raiz = Agregar(this.Raiz!, dato, ref flag, Comparador, Check, ref succes);
+            if(succes == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Comparar<T> Comparador)
+        public NodoArbol<T> Agregar(NodoArbol<T> Raiz, T dato, ref bool Flag, Comparar<T> Comparador, CheckDay<T> check, ref bool succes)
         {
             NodoArbol<T> nodo;
             if (Raiz == null)
@@ -36,67 +45,75 @@ namespace ProyectoASE.Prueba_Arbol
             }
             else
             {
-                
-                if (Comparador(dato, Raiz.Value) < 0)
+                citas = 0;
+                if (Check(dato, ref citas, Raiz, check) <= 6)
                 {
-                    Raiz.Izquierdo = Agregar(Raiz.Izquierdo!, dato, ref Flag, Comparador);
-                    if (Flag)
+                    succes = true;
+                    if (Comparador(dato, Raiz.Value) < 0)
                     {
-                        if (Raiz.Balance == -1)
+                        Raiz.Izquierdo = Agregar(Raiz.Izquierdo!, dato, ref Flag, Comparador, check, ref  succes);
+                        if (Flag)
                         {
-                            Raiz.Balance = 0;
-                            Flag = false;
-                        }
-                        else if (Raiz.Balance == 0)
-                        {
-                            Raiz.Balance = 1;
-                        }
-                        else if (Raiz.Balance == 1)
-                        {
-                            nodo = Raiz.Izquierdo;
-                            if (nodo.Balance == 1)
+                            if (Raiz.Balance == -1)
                             {
-                                Raiz = Rotacion_simple_derecha(Raiz, nodo);
+                                Raiz.Balance = 0;
+                                Flag = false;
                             }
-                            else
+                            else if (Raiz.Balance == 0)
                             {
-                                Raiz = Rotacion_doble_derecha(Raiz, nodo);
+                                Raiz.Balance = 1;
                             }
-                            Flag = false;
+                            else if (Raiz.Balance == 1)
+                            {
+                                nodo = Raiz.Izquierdo;
+                                if (nodo.Balance == 1)
+                                {
+                                    Raiz = Rotacion_simple_derecha(Raiz, nodo);
+                                }
+                                else
+                                {
+                                    Raiz = Rotacion_doble_derecha(Raiz, nodo);
+                                }
+                                Flag = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Comparador(dato, Raiz.Value) > 0)
+                        {
+                            Raiz.Derecho = Agregar(Raiz.Derecho!, dato, ref Flag, Comparador, check, ref succes);
+                            if (Flag)
+                            {
+                                if (Raiz.Balance == -1)
+                                {
+                                    nodo = Raiz.Derecho;
+                                    if (nodo.Balance == -1)
+                                    {
+                                        Raiz = Rotacion_simple_izquierda(Raiz, nodo);
+                                    }
+                                    else
+                                    {
+                                        Raiz = Rotacion_doble_izquierda(Raiz, nodo);
+                                    }
+                                    Flag = false;
+                                }
+                                else if (Raiz.Balance == 0)
+                                {
+                                    Raiz.Balance = -1;
+                                }
+                                else if (Raiz.Balance == 1)
+                                {
+                                    Raiz.Balance = 0;
+                                    Flag = false;
+                                }
+                            }
                         }
                     }
                 }
                 else
                 {
-                    if (Comparador(dato, Raiz.Value) > 0)
-                    {
-                        Raiz.Derecho = Agregar(Raiz.Derecho!, dato, ref Flag, Comparador);
-                        if (Flag)
-                        {
-                            if (Raiz.Balance == -1)
-                            {
-                                nodo = Raiz.Derecho;
-                                if (nodo.Balance == -1)
-                                {
-                                    Raiz = Rotacion_simple_izquierda(Raiz, nodo);
-                                }
-                                else
-                                {
-                                    Raiz = Rotacion_doble_izquierda(Raiz, nodo);
-                                }
-                                Flag = false;
-                            }
-                            else if (Raiz.Balance == 0)
-                            {
-                                Raiz.Balance = -1;
-                            }
-                            else if (Raiz.Balance == 1)
-                            {
-                                Raiz.Balance = 0;
-                                Flag = false;
-                            }
-                        }
-                    }
+                    succes = false;
                 }
             }
             return Raiz;
@@ -158,10 +175,45 @@ namespace ProyectoASE.Prueba_Arbol
             return NODO;
         }
 
+        //Verificación de día
+        public int Check(T dato, ref int contador, NodoArbol<T> nodo, CheckDay<T> check)
+        {
+            bool regulador = false;
+            if(nodo != null)
+            {
+                if (check(dato, nodo.Value) == 1)
+                {
+                    regulador = true;
+                    if (nodo.Izquierdo != null)
+                    {
+                        contador++;
+                        Check(dato, ref contador, nodo.Izquierdo, check);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        contador++;
+                        Check(dato, ref contador, nodo.Derecho, check);
+                    }
+                }
+                else
+                {
+                    regulador = false;
+                    if (nodo.Izquierdo != null)
+                    {
+                        Check(dato, ref contador, nodo.Izquierdo, check);
+                    }
+                    if (nodo.Derecho != null)
+                    {
+                        Check(dato, ref contador, nodo.Derecho, check);
+                    }
+                }
+            }
+            return contador;
+        }
+
         //Busquedas
         public List<T> BusquedaCN(string buscar, CompararN<T> busqueda)
         {
-            resultName = null;
             List<T> nombres = new List<T>();
             BusquedaN(buscar, Raiz, busqueda, ref nombres);
             return nombres;
