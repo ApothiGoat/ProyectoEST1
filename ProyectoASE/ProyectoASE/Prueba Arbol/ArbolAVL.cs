@@ -42,6 +42,7 @@ namespace ProyectoASE.Prueba_Arbol
             {
                 Raiz = new NodoArbol<T>(dato);
                 Flag = true;
+                succes = true;
             }
             else
             {
@@ -178,12 +179,10 @@ namespace ProyectoASE.Prueba_Arbol
         //Verificación de día
         public int Check(T dato, ref int contador, NodoArbol<T> nodo, CheckDay<T> check)
         {
-            bool regulador = false;
             if(nodo != null)
             {
                 if (check(dato, nodo.Value) == 1)
                 {
-                    regulador = true;
                     if (nodo.Izquierdo != null)
                     {
                         contador++;
@@ -197,7 +196,6 @@ namespace ProyectoASE.Prueba_Arbol
                 }
                 else
                 {
-                    regulador = false;
                     if (nodo.Izquierdo != null)
                     {
                         Check(dato, ref contador, nodo.Izquierdo, check);
@@ -209,6 +207,8 @@ namespace ProyectoASE.Prueba_Arbol
                 }
             }
             return contador;
+
+
         }
 
         //Busquedas

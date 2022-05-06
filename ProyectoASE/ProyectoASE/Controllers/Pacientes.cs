@@ -51,6 +51,12 @@ namespace ProyectoASE.Controllers
                     NextAppoint = nextAppoint,
                     Description = collection["Description"],
                 });
+
+                if (informacion == false)
+                {
+                    ViewBag.Message = "No se encuentran citas disponibles para esta fecha";
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -73,6 +79,7 @@ namespace ProyectoASE.Controllers
         {
             try
             {
+                
                 var nextAppoint = collection["NextAppoint"] != string.Empty ? Convert.ToDateTime(collection["NextAppoint"]) : default;
                 var informacion = PacientesModel.EditSave(new PacientesModel
                 {
@@ -182,13 +189,14 @@ namespace ProyectoASE.Controllers
         }
         public ActionResult PlusSix()
         {
+           
             try
-            {
+            {              
                 var pacientes = PacientesModel.Six();
                 return View(pacientes);
             }
             catch (Exception)
-            {
+            {            
                 return RedirectToAction(nameof(Index));
             }
         }

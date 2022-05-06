@@ -52,6 +52,18 @@
             </div>
         </form>
     </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+
+                    window.onload = function () {
+                        alert("@ViewBag.Message")
+                    }
+
+        </script>
+    }
+
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
