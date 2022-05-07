@@ -294,27 +294,30 @@ namespace ProyectoASE.Prueba_Arbol
         }
 
         //Edit
-        public void EditarCall(T nuevo, long dpi, CompararD<T> busqueda)
+        public void EditarCall(T nuevo, long dpi, CompararD<T> busqueda, CheckDay<T> check)
         {
-            Editar(nuevo, dpi, Raiz, busqueda);
+            Editar(nuevo, dpi, Raiz, busqueda, check);
         }
-        public void Editar(T nuevo, long buscar, NodoArbol<T> nodo, CompararD<T> busqueda)
+        public void Editar(T nuevo, long buscar, NodoArbol<T> nodo, CompararD<T> busqueda, CheckDay<T> check)
         {
-            if (busqueda(buscar, nodo.Value) == 1)
+            if (Check(nuevo, ref citas, Raiz, check) <= 6)
             {
-                nodo.Value = nuevo;
-            }
-            else if (busqueda(buscar, nodo.Value) == 0)
-            {
-                if (nodo.Izquierdo != null)
+                if (busqueda(buscar, nodo.Value) == 1)
                 {
-                    resultDPI = null;
-                    Editar(nuevo, buscar, nodo.Izquierdo, busqueda);
+                    nodo.Value = nuevo;
                 }
-                else if (nodo.Derecho != null)
+                else if (busqueda(buscar, nodo.Value) == 0)
                 {
-                    resultDPI = null;
-                    Editar(nuevo, buscar, nodo.Derecho, busqueda);
+                    if (nodo.Izquierdo != null)
+                    {
+                        resultDPI = null;
+                        Editar(nuevo, buscar, nodo.Izquierdo, busqueda, check);
+                    }
+                    else if (nodo.Derecho != null)
+                    {
+                        resultDPI = null;
+                        Editar(nuevo, buscar, nodo.Derecho, busqueda, check);
+                    }
                 }
             }
         }

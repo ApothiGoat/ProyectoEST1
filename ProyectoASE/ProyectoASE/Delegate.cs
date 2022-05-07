@@ -18,9 +18,9 @@ namespace ProyectoASE
     {
         public static int CompName(PacientesModel a, PacientesModel b)
         {
-            if (a.Name != b.Name)
+            if (a.DPI != b.DPI)
             {
-                if (a.Name.CompareTo(b.Name) < 0)
+                if (a.DPI.CompareTo(b.DPI) < 0)
                 {
                     return -1;
                 }

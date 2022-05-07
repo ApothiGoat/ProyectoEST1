@@ -42,7 +42,7 @@ namespace ProyectoASE.Models
         }
         public static bool EditSave(PacientesModel model, long dpi)
         {
-            Data.Instance.Pacientes.EditarCall(model, dpi, Comparar.SearchDPI);
+            Data.Instance.Pacientes.EditarCall(model, dpi, Comparar.SearchDPI, Comparar.CheckDay);
             return true;
         }
         public static bool SearchSave(PacientesModel model)
