@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<ProyectoASE.Models.PacientesModel>
 
 @{
-    ViewData["Title"] = "Sonrisa 10/10";
+    ViewData["Title"] = "Sonrisas 10/10";
 }
 
-<h1>Sonrisa 10/10</h1> 
+<h1>Sonrisas 10/10</h1> 
     <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <p>
-        @Html.ActionLink("Busqueda", "Busqueda", new { })
+        <a asp-action="Create">Create New</a> | @Html.ActionLink("Busqueda", "Busqueda", new { })
     </p>
     <p>
         @Html.ActionLink("Seguimiento", "PlusSix", new { }) |  @Html.ActionLink("Ortodoncia", "Ortodoncia", new { }) | @Html.ActionLink("Caries", "Caries", new { }) | @Html.ActionLink("Especifico", "Specific", new { })
